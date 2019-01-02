@@ -21,6 +21,7 @@
                     <div class="card-body">
                         <div class="card-title">Edit user</div>
                         <form method="post" action="updateuser" class="login-form card-body">
+                            <input type="hidden" name="id" value="${user.id}">
                             <div class="form-group">
                                 <input type="text" name="username" class="form-control" value="${user.name}" placeholder="Full Name" autofocus>
                             </div>

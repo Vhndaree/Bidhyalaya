@@ -19,9 +19,9 @@
 <%@include file="/include/navbar.jsp"%>
     <div class="page-background">
         <div class="container">
-            <div class="bg-danger mt-5">${updateMessage}</div>
+            <div class="bg-danger mt-5">${message}</div>
+
             <div class="table-responsive mt-3">
-                <div class=" bg-danger">${deleteMessage}</div>
                 <table class="table table-hover">
                     <thead>
                         <tr>

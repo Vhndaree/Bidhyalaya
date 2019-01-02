@@ -16,6 +16,7 @@ import java.util.List;
 public class UserServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String pageRequest=request.getParameter("pageRequest");
         UserService userService=new UserService();
 
@@ -71,23 +72,17 @@ public class UserServlet extends HttpServlet {
 
         if (pageRequest.equalsIgnoreCase("userList")) {
             //get all user from utils
-            List<User> userList = new UserService().userList();
-            request.setAttribute("userList",userList);
-            RequestDispatcher requestDispatcher=request.getRequestDispatcher("user/index.jsp");
-            requestDispatcher.forward(request, response);
+
+            redirectToList(request, response, "");
         }
 
         //for delete user
         if(pageRequest.equalsIgnoreCase("deleteUser")){
+            User user = userService.selectUser(Integer.parseInt(request.getParameter("id")));
             userService.deleteUser(Integer.parseInt(request.getParameter("id")));
-            request.setAttribute("deleteMessage", "User removed..");
+            String message ="User "+user.getName()+" removed.";
+            redirectToList(request, response, message);
 
-            //get all user from utils
-            List<User> userList = new UserService().userList();
-            request.setAttribute("userList",userList);
-
-            RequestDispatcher requestDispatcher= request.getRequestDispatcher("user/index.jsp");
-            requestDispatcher.forward(request,response);
         }
 
         //update user page
@@ -101,15 +96,22 @@ public class UserServlet extends HttpServlet {
 
         //for update user information
         if(pageRequest.equalsIgnoreCase("updateUser")){
-            List<User> userList = userService.userList();
-            request.setAttribute("userList",userList);
 
-            userService.updateUser(userService.getUser(request));
-            request.setAttribute("updateMessage","User updated successfully.");
-
-            RequestDispatcher requestDispatcher=request.getRequestDispatcher("user/index.jsp");
-            requestDispatcher.forward(request,response);
+            User user;
+            userService.updateUser(user=userService.getUser(request),Integer.parseInt(request.getParameter("id")));
+            String message="User "+user.getName()+" updated.";
+            redirectToList(request,response, message);
         }
+    }
+
+    private void redirectToList(HttpServletRequest request, HttpServletResponse response, String message) throws ServletException, IOException {
+        //get all user from utils
+        List<User> userList = new UserService().userList();
+        request.setAttribute("userList", userList);
+        request.setAttribute("message",message);
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/index.jsp");
+        requestDispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

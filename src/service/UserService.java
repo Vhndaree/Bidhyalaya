@@ -98,16 +98,16 @@ public class UserService {
 
     }
 
-    public void updateUser(User user){
+    public void updateUser(User user, int id){
         PreparedStatement preparedStatement=null;
         String query="update user set name=?, email=?, password=? where id=?";
 
         try{
             preparedStatement=new DatabaseConnection().getPreparedStatement(query);
             preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(1, user.getPassword());
-            preparedStatement.setInt(4,user.getId());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setInt(4,id);
 
             preparedStatement.execute();
         }catch(Exception e){
