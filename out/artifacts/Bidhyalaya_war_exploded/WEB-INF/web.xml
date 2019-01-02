@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+        <!--User task mapping-->
         <servlet>
             <servlet-name>user</servlet-name>
             <servlet-class>controller.UserServlet</servlet-class>
@@ -41,5 +42,34 @@
             <url-pattern>/deleteuser</url-pattern>
         </servlet-mapping>
 
+        <!--Question task mapping-->
+
+        <servlet>
+            <servlet-name>question</servlet-name>
+            <servlet-class>controller.QuestionServlet</servlet-class>
+        </servlet>
+
+        <servlet-mapping>
+            <servlet-name>question</servlet-name>
+            <url-pattern>/addquestionpage</url-pattern>
+        </servlet-mapping>
+
+        <servlet-mapping>
+            <servlet-name>question</servlet-name>
+            <url-pattern>/addquestion</url-pattern>
+        </servlet-mapping>
+
+        <servlet-mapping>
+            <servlet-name>question</servlet-name>
+            <url-pattern>/listquestion</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>question</servlet-name>
+            <url-pattern>/deletequestion</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>question</servlet-name>
+            <url-pattern>/updatequestion</url-pattern>
+        </servlet-mapping>
 
 </web-app>

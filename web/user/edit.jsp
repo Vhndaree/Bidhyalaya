@@ -23,19 +23,19 @@
                         <form method="post" action="updateuser" class="login-form card-body">
                             <input type="hidden" name="id" value="${user.id}">
                             <div class="form-group">
-                                <input type="text" name="username" class="form-control" value="${user.name}" placeholder="Full Name" autofocus>
+                                <label>Name</label> <input type="text" name="username" class="form-control" value="${user.name}" placeholder="Full Name" autofocus>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="email" class="form-control" value="${user.email}" placeholder="Email Address" autofocus>
+                                <label>Email</label> <input type="text" name="email" class="form-control" value="${user.email}" placeholder="Email Address" autofocus>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="password" class="form-control" value="${user.password}" placeholder="Password">
+                                <label>Password</label> <input type="text" name="password" class="form-control" value="${user.password}" placeholder="Password">
                             </div>
                             <div class="form-group">
-                                <input type="password" name="confirmPassword" class="form-control" placeholder="Re-enter password" autofocus>
+                                <label>Confirm password</label> <input type="password" name="confirmPassword" class="form-control" placeholder="Re-enter password" autofocus>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="role" class="form-control" value="${user.role}" placeholder="Role" autofocus>
+                                <label>Role</label> <input type="text" name="role" class="form-control" value="${user.role}" placeholder="Role" autofocus>
                             </div>
 
                             <div class="form-group">
