@@ -31,8 +31,9 @@
         <div class="card mt-5">
             <div class=" bg-danger">${message}</div>
             <div class="card-body">
-                <div class="card-title">Add Question</div>
-                <form method="post" action="addquestion" class="login-form card-body">
+                <div class="card-title">Update Question</div>
+                <form method="post" action="updatequestion" class="login-form card-body">
+                    <input type="hidden" name="id" value="${question.id}">
                     <div class="form-group">
                         <label>Question</label> <textarea rows="5" name="question" class="form-control" autofocus>${question.question}</textarea>
                     </div>
@@ -75,10 +76,10 @@
                     </div>
 
                     <div class="form-group">
-                        <input class="btn btn-danger float-right" type="submit" value="Add Question" title="ADD QUESTION">
+                        <input class="btn btn-danger float-right" type="submit" value="Update Question" title="UPDATE">
                     </div>
                     <%--Hidden field for Login--%>
-                    <input type="hidden" name="pageRequest" value="addQuestion">
+                    <input type="hidden" name="pageRequest" value="updateQuestion">
                 </form>
             </div>
         </div>

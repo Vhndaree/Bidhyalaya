@@ -2,6 +2,7 @@ package controller;
 
 import domains.Question;
 import service.QuestionService;
+import sun.security.x509.RDN;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,12 +47,21 @@ public class QuestionServlet extends HttpServlet {
             redirectToList(request, response,"Question deleted.");
         }
 
+        //redirect to edit page
         if(pageRequest.equalsIgnoreCase("updateQuestionPage")){
             Question question=questionService.selectQuestion(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("question", question);
 
             RequestDispatcher requestDispatcher=request.getRequestDispatcher("question/edit.jsp");
             requestDispatcher.forward(request, response);
+        }
+
+        //edit question
+        if(pageRequest.equalsIgnoreCase("updateQuestion")){
+            questionService.updateQuestion(questionService.getQuestion(request), Integer.parseInt(request.getParameter("id")));
+
+            String message = "Question updated.";
+            redirectToList(request, response, message);
         }
     }
 

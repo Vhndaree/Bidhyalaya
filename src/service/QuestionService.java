@@ -87,7 +87,7 @@ public class QuestionService {
             preparedStatement.setString(6, question.getOption3());
             preparedStatement.setString(7, question.getOption4());
             preparedStatement.setString(8, question.getCorrectAnswer());
-            preparedStatement.setInt(9,question.getId());
+            preparedStatement.setInt(9,id);
 
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -106,6 +106,7 @@ public class QuestionService {
             resultSet=preparedStatement.executeQuery();
 
             while (resultSet.next()){
+                question.setId(resultSet.getInt("id"));
                 question.setQuestion(resultSet.getString("question"));
                 question.setCategory(resultSet.getString("category"));
                 question.setDifficultyLevel(resultSet.getString("difficulty_level"));

@@ -30,9 +30,9 @@
         <%--for adding question--%>
         <li class="dropdown nav-item">
             <div class="dropdown-toggle nav-link text-light" data-toggle="dropdown">Question</div>
-            <ul class="dropdown-menu text-center">
-                <li><a href="addquestionpage?pageRequest=addQuestionPage">Add Question</a></li>
-                <li><a href="listquestion?pageRequest=listQuestion">Questions</a></li>
+            <ul class="dropdown-menu">
+                <li ><a class="nav-link" href="addquestionpage?pageRequest=addQuestionPage">Add Question</a></li>
+                <li ><a class="nav-link" href="listquestion?pageRequest=listQuestion">Questions</a></li>
             </ul>
         </li>
 
