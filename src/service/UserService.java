@@ -12,8 +12,6 @@ import java.util.List;
 
 public class UserService {
 
-
-
     public void registerUser(User user){
 
         String query="insert into user(name, email, password) values(?, ?, ?)";
@@ -57,6 +55,7 @@ public class UserService {
         user.setName(resultSet.getString("name"));
         user.setEmail(resultSet.getString("email"));
         user.setPassword(resultSet.getString("password"));
+        user.setRole(resultSet.getString("role"));
     }
 
     public List<User> userList(){
@@ -99,14 +98,15 @@ public class UserService {
     }
 
     public void updateUser(User user, int id){
-        String query="update user set name=?, email=?, password=? where id=?";
+        String query="update user set name=?, email=?, password=?, role=? where id=?";
 
         try{
             PreparedStatement preparedStatement = new DatabaseConnection().getPreparedStatement(query);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setInt(4,id);
+            preparedStatement.setString(4, user.getRole());
+            preparedStatement.setInt(5,id);
             preparedStatement.execute();
 
         }catch(Exception e){

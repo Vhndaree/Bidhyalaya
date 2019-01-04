@@ -19,9 +19,6 @@
 <%@include file="/html/head.jsp"%>
 <title>Question</title>
 
-<%--Jstl core group tags--%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
 </head>
 <body>
 
