@@ -22,59 +22,46 @@ public class QuestionServlet extends HttpServlet {
         QuestionService questionService=new QuestionService();
 
         HttpSession session=request.getSession(false);
-        if(session.getAttribute("user")!=null) {
 
-            User user=(User)session.getAttribute("user");
-            if(user.getRole().equalsIgnoreCase("admin")) {
-                //redirect to add question page
-                if (pageRequest.equalsIgnoreCase("addQuestionPage")) {
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("question/create.jsp");
-                    requestDispatcher.forward(request, response);
-                }
-
-                //Add questions
-                if (pageRequest.equalsIgnoreCase("addQuestion")) {
-                    questionService.addQuestion(questionService.getQuestion(request));
-                    request.setAttribute("message", "Question added successfully.");
-
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("question/create.jsp");
-                    requestDispatcher.forward(request, response);
-                }
-
-                //List all questions
-                if (pageRequest.equalsIgnoreCase("listQuestion")) {
-                    redirectToList(request, response, "");
-                }
-
-                //Delete question
-                if (pageRequest.equalsIgnoreCase("deleteQuestion")) {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    questionService.deleteQuestion(id);
-
-                    redirectToList(request, response, "Question deleted.");
-                }
-
-                //redirect to edit page
-                if (pageRequest.equalsIgnoreCase("updateQuestionPage")) {
-                    Question question = questionService.selectQuestion(Integer.parseInt(request.getParameter("id")));
-                    request.setAttribute("question", question);
-
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("question/edit.jsp");
-                    requestDispatcher.forward(request, response);
-                }
-
-                //edit question
-                if (pageRequest.equalsIgnoreCase("updateQuestion")) {
-                    questionService.updateQuestion(questionService.getQuestion(request), Integer.parseInt(request.getParameter("id")));
-
-                    String message = "Question updated.";
-                    redirectToList(request, response, message);
-                }
-            } else {
-                redirectToHome(request, response,"");
+        User user=(User)session.getAttribute("user");
+        if(user.getRole().equalsIgnoreCase("admin")) {
+            //redirect to add question page
+            if (pageRequest.equalsIgnoreCase("addQuestionPage")) {
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("question/create.jsp");
+                requestDispatcher.forward(request, response);
+            }
+            //Add questions
+            if (pageRequest.equalsIgnoreCase("addQuestion")) {
+                questionService.addQuestion(questionService.getQuestion(request));
+                request.setAttribute("message", "Question added successfully.");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("question/create.jsp");
+                requestDispatcher.forward(request, response);
+            }
+            //List all questions
+            if (pageRequest.equalsIgnoreCase("listQuestion")) {
+                redirectToList(request, response, "");
+            }
+            //Delete question
+            if (pageRequest.equalsIgnoreCase("deleteQuestion")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                questionService.deleteQuestion(id);
+                redirectToList(request, response, "Question deleted.");
+            }
+            //redirect to edit page
+            if (pageRequest.equalsIgnoreCase("updateQuestionPage")) {
+                Question question = questionService.selectQuestion(Integer.parseInt(request.getParameter("id")));
+                request.setAttribute("question", question);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("question/edit.jsp");
+                requestDispatcher.forward(request, response);
+            }
+            //edit question
+            if (pageRequest.equalsIgnoreCase("updateQuestion")) {
+                questionService.updateQuestion(questionService.getQuestion(request), Integer.parseInt(request.getParameter("id")));
+                String message = "Question updated.";
+                redirectToList(request, response, message);
             }
         } else {
-            redirectToIndex(request, response, "Please! Login first.");
+                redirectToHome(request, response,"");
         }
     }
 

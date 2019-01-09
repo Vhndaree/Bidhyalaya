@@ -18,7 +18,7 @@
     <!--CSS for background image-->
 
     <%--Hero image css--%>
-    <link rel="stylesheet" href="css/heroImage.css">
+    <link rel="stylesheet" href="../css/heroImage.css">
 
     <%--jQuery cdn--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

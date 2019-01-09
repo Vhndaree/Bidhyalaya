@@ -72,4 +72,21 @@
             <url-pattern>/updatequestion</url-pattern>
         </servlet-mapping>
 
+
+        <!--Login Filter Mapping-->
+        <filter>
+            <filter-name>loginfilter</filter-name>
+            <filter-class>controller.LoginFilter</filter-class>
+        </filter>
+
+        <filter-mapping>
+            <filter-name>loginfilter</filter-name>
+            <url-pattern>/user</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+            <filter-name>loginfilter</filter-name>
+            <url-pattern>/question</url-pattern>
+        </filter-mapping>
+
 </web-app>
