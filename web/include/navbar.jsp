@@ -10,16 +10,9 @@
         <li class="nav-item">
             <a class="nav-link text-light"  href="home?pageRequest=home"><i class="fa fa-home" ></i></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-light" href="#">Courses</a>
-        </li>
 
         <li class="nav-item">
-            <a class="nav-link text-light" href="#">upcoming intakes</a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-light" href="#">Admission</a>
+            <a class="nav-link text-light" href="startquiz?pageRequest=selectquiz">Play Quiz</a>
         </li>
 
         <c:if test="${sessionScope.user.role=='admin'}">
@@ -32,15 +25,16 @@
             <li class="dropdown nav-item">
                 <div class="dropdown-toggle nav-link text-light" data-toggle="dropdown">Question</div>
                 <ul class="dropdown-menu">
+                    <li ><a class="nav-link" href="listquestioncategory?pageRequest=listQuestionCategory">Question category</a></li>
                     <li ><a class="nav-link" href="addquestionpage?pageRequest=addQuestionPage">Add Question</a></li>
                     <li ><a class="nav-link" href="listquestion?pageRequest=listQuestion">Questions</a></li>
                 </ul>
             </li>
         </c:if>
     </ul>
-    <ul class="navbar-nav ml-auto">
+    <ul class="nav ml-auto">
         <li class="dropdown nav-item">
-            <div class="dropdown-toggle text-light" data-toggle="dropdown">${sessionScope.user.name}</div>
+            <div class="dropdown-toggle text-light mr-5" data-toggle="dropdown">${sessionScope.user.name}</div>
             <ul class="dropdown-menu">
                 <li ><a class="nav-link" href="logout?pageRequest=logout">Logout</a></li>
             </ul>

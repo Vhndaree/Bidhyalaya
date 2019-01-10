@@ -1,15 +1,15 @@
 package domains;
 
 public class Question {
-    int id;
-    String question;
-    String category;
-    String difficultyLevel;
-    String option1;
-    String option2;
-    String option3;
-    String option4;
-    String correctAnswer;
+    private int id;
+    private String question;
+    private String category;
+    private String difficultyLevel;
+    private String option1;
+    private String option2;
+    private String option3;
+    private String option4;
+    private String correctAnswer;
 
     public int getId() {
         return id;

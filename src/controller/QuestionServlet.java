@@ -1,7 +1,9 @@
 package controller;
 
 import domains.Question;
+import domains.QuestionCategory;
 import domains.User;
+import service.QuestionCategoryService;
 import service.QuestionService;
 import sun.security.x509.RDN;
 
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "QuestionServlet")
@@ -27,12 +30,14 @@ public class QuestionServlet extends HttpServlet {
         if(user.getRole().equalsIgnoreCase("admin")) {
             //redirect to add question page
             if (pageRequest.equalsIgnoreCase("addQuestionPage")) {
+                List<QuestionCategory> questionCategories=new QuestionCategoryService().getQuestionCategoryList();
+                request.setAttribute("questionCategories", questionCategories);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("question/create.jsp");
                 requestDispatcher.forward(request, response);
             }
             //Add questions
             if (pageRequest.equalsIgnoreCase("addQuestion")) {
-                questionService.addQuestion(questionService.getQuestion(request));
+                questionService.addQuestion(request);
                 request.setAttribute("message", "Question added successfully.");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("question/create.jsp");
                 requestDispatcher.forward(request, response);
@@ -50,13 +55,15 @@ public class QuestionServlet extends HttpServlet {
             //redirect to edit page
             if (pageRequest.equalsIgnoreCase("updateQuestionPage")) {
                 Question question = questionService.selectQuestion(Integer.parseInt(request.getParameter("id")));
+                List<QuestionCategory> questionCategories=new QuestionCategoryService().getQuestionCategoryList();
+                request.setAttribute("questionCategories", questionCategories);
                 request.setAttribute("question", question);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("question/edit.jsp");
                 requestDispatcher.forward(request, response);
             }
             //edit question
             if (pageRequest.equalsIgnoreCase("updateQuestion")) {
-                questionService.updateQuestion(questionService.getQuestion(request), Integer.parseInt(request.getParameter("id")));
+                questionService.updateQuestion(request, Integer.parseInt(request.getParameter("id")));
                 String message = "Question updated.";
                 redirectToList(request, response, message);
             }

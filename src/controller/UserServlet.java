@@ -52,7 +52,10 @@ public class UserServlet extends HttpServlet {
         //register user
         if(pageRequest.equalsIgnoreCase("registeruser")){
             //gets user credential for registration
+
+            HttpSession session=request.getSession(false);
             userService.registerUser(userService.getUser(request));
+            session.setAttribute("user",userService.getUser(request));
             redirectToHome(request, response, "Signed up and login successfully");
         }
 

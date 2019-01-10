@@ -37,15 +37,10 @@
                     <div class="form-group">
                         <label>Category</label>
                         <select class="form-control" name="category">
-                            <option value="general" ${question.category == 'general'?'selected':''}>General</option>
-                            <option value="computer" ${question.category == 'computer'?'selected':''}>Computer</option>
-                            <option value="science" ${question.category == 'science'?'selected':''}>Science</option>
-                            <option value="geography" ${question.category == 'geography'?'selected':''}>Geography</option>
-                            <option value="sports" ${question.category == 'sports'?'selected':''}>Sports</option>
-                            <option value="art and literature" ${question.category == 'art and literature'?'selected':''}>Art & Literature</option>
-                            <option value="history"${question.category == 'history'?'selected':''}>History</option>
-                            <option value="current affairs" ${question.category == 'current affairs'?'selected':''}>Current affairs</option>
-                            <option value="IQ" ${question.category == 'IQ'?'selected':''}>IQ</option>
+                            <option value="default">--select--</option>
+                            <c:forEach items="${questionCategories}" var="questionCategories">
+                                <option value="${questionCategories.category}" ${questionCategories.category== question.category?'selected':''}>${questionCategories.category}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
@@ -69,7 +64,13 @@
                         <label>Option 4</label> <textarea rows="1" name="option4" class="form-control" autofocus>${question.option4}</textarea>
                     </div>
                     <div class="form-group">
-                        <label>Correct answer</label> <textarea rows="1" name="correctanswer" class="form-control" autofocus>${question.correctAnswer}</textarea>
+                        <label>Correct answer</label>
+                        <select name="correctanswer" class="form-control" autofocus>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                            <option value="option4">Option 4</option>
+                        </select>
                     </div>
 
                     <div class="form-group">

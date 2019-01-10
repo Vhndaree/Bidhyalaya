@@ -21,16 +21,15 @@ public class LoginFilter implements Filter {
             pageRequest = "NA";
         }
         String landingURI = request.getContextPath() + "/";
-
-        if((session==null || session.getAttribute("user")==null)&&!pageRequest.equalsIgnoreCase("login") && !pageRequest.equalsIgnoreCase("logout")){
+        if((session==null || session.getAttribute("user")==null)&&!pageRequest.equalsIgnoreCase("login") && !pageRequest.equalsIgnoreCase("logout") && !pageRequest.equalsIgnoreCase("registeruser")){
             if(request.getRequestURI().equals(landingURI)) {
                 req.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
                 request.setAttribute("message", "Please Login first.");
                 req.getRequestDispatcher("index.jsp").forward(request, response);
             }
-        } else {
         }
+        chain.doFilter(req, resp);
     }
 
     public void init(FilterConfig config) throws ServletException {

@@ -12,19 +12,13 @@ import java.util.List;
 
 public class QuestionService {
     
-    public void addQuestion(Question question){
+    public void addQuestion(HttpServletRequest request){
+        Question question=getQuestion(request);
+
         String query="insert into question (question, category, difficulty_level, option_1, option_2, option_3, option_4, correct_answer) values(?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
-            PreparedStatement preparedStatement=new DatabaseConnection().getPreparedStatement(query);
-            preparedStatement.setString(1, question.getQuestion());
-            preparedStatement.setString(2, question.getCategory());
-            preparedStatement.setString(3, question.getDifficultyLevel());
-            preparedStatement.setString(4, question.getOption1());
-            preparedStatement.setString(5, question.getOption2());
-            preparedStatement.setString(6, question.getOption3());
-            preparedStatement.setString(7, question.getOption4());
-            preparedStatement.setString(8, question.getCorrectAnswer());
+            PreparedStatement preparedStatement = enterQuestion(query, question);
 
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -35,13 +29,13 @@ public class QuestionService {
     public List<Question> getQuestionList(){
         String query="select * from question";
         ResultSet resultSet;
-        List<Question> questionList=new ArrayList<Question>();
+        List<Question> questionList=new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement=new DatabaseConnection().getPreparedStatement(query);
             resultSet=preparedStatement.executeQuery();
 
-            while (resultSet.next()){
+            while(resultSet.next()){
                 Question question=new Question();
 
                 question.setId(resultSet.getInt("id"));
@@ -74,19 +68,12 @@ public class QuestionService {
 
     }
 
-    public void updateQuestion(Question question, int id){
+    public void updateQuestion(HttpServletRequest request, int id){
         String query="update question set question=?, category=?, difficulty_level=?, option_1=?, option_2=?, option_3=?, option_4=?, correct_answer=? where id=?";
 
+        Question question=getQuestion(request);
         try {
-            PreparedStatement preparedStatement=new DatabaseConnection().getPreparedStatement(query);
-            preparedStatement.setString(1, question.getQuestion());
-            preparedStatement.setString(2, question.getCategory());
-            preparedStatement.setString(3, question.getDifficultyLevel());
-            preparedStatement.setString(4, question.getOption1());
-            preparedStatement.setString(5, question.getOption2());
-            preparedStatement.setString(6, question.getOption3());
-            preparedStatement.setString(7, question.getOption4());
-            preparedStatement.setString(8, question.getCorrectAnswer());
+            PreparedStatement preparedStatement = enterQuestion(query, question);
             preparedStatement.setInt(9,id);
 
             preparedStatement.execute();
@@ -95,6 +82,7 @@ public class QuestionService {
         }
 
     }
+
 
     public Question selectQuestion(int id){
         String query="select * from question where id=?";
@@ -123,7 +111,7 @@ public class QuestionService {
         return question;
     }
     
-    public Question getQuestion(HttpServletRequest request){
+    private Question getQuestion(HttpServletRequest request){
         Question question=new Question();
         
         question.setQuestion(request.getParameter("question"));
@@ -133,8 +121,22 @@ public class QuestionService {
         question.setOption2(request.getParameter("option2"));
         question.setOption3(request.getParameter("option3"));
         question.setOption4(request.getParameter("option4"));
-        question.setCorrectAnswer(request.getParameter("correctanswer"));
+        question.setCorrectAnswer(request.getParameter(request.getParameter("correctanswer")));
         
         return question;
+    }
+
+    private PreparedStatement enterQuestion(String query, Question question) throws SQLException {
+        PreparedStatement preparedStatement = new DatabaseConnection().getPreparedStatement(query);
+        preparedStatement.setString(1, question.getQuestion());
+        preparedStatement.setString(2, question.getCategory());
+        preparedStatement.setString(3, question.getDifficultyLevel());
+        preparedStatement.setString(4, question.getOption1());
+        preparedStatement.setString(5, question.getOption2());
+        preparedStatement.setString(6, question.getOption3());
+        preparedStatement.setString(7, question.getOption4());
+        preparedStatement.setString(8, question.getCorrectAnswer());
+
+        return preparedStatement;
     }
 }

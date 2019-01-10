@@ -37,15 +37,10 @@
                     <div class="form-group">
                         <label>Category</label>
                         <select class="form-control" name="category">
-                            <option value="general">General</option>
-                            <option value="computer">Computer</option>
-                            <option value="science">Science</option>
-                            <option value="geography">Geography</option>
-                            <option value="sports">Sports</option>
-                            <option value="art and literature">Art & Literature</option>
-                            <option value="history">History</option>
-                            <option value="current affairs">Current affairs</option>
-                            <option value="IQ">IQ</option>
+                            <option value="default">--select--</option>
+                            <c:forEach items="${questionCategories}" var="questionCategories">
+                                <option value="${questionCategories.category}">${questionCategories.category}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
@@ -69,7 +64,13 @@
                         <label>Option 4</label> <textarea rows="1" name="option4" class="form-control" autofocus></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Correct answer</label> <textarea rows="1" name="correctanswer" class="form-control" autofocus></textarea>
+                        <label>Correct answer</label>
+                        <select name="correctanswer" class="form-control" autofocus>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                            <option value="option4">Option 4</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
