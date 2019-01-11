@@ -102,7 +102,7 @@
         <!--Quiz map-->
         <servlet-mapping>
             <servlet-name>startquiz</servlet-name>
-            <url-pattern>/startquiz</url-pattern>
+            <url-pattern>/quiz</url-pattern>
         </servlet-mapping>
 
         <!--Question category mapping-->

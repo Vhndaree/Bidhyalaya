@@ -27,7 +27,7 @@
     <div class="container">
         <div class="card mt-5">
             <div class="card-body">
-                <form method="post" action="startquiz" class="login-form card-body">
+                <form method="post" action="quiz" class="login-form card-body">
                     <div class="form-group">
                         <label>Select Category</label>
                         <div class="form-control">
@@ -44,15 +44,13 @@
                             <span class="col-md-4"><input type="radio" name="difficulty" value="expert"> Expert</span>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Number of Questions</label> <input type="number" min="1" value="1" name="questionnumber" class="form-control" autofocus>
-                    </div>
 
                     <div class="form-group">
                         <input class="btn btn-danger float-right" type="submit" value="START" title="START QUIZ">
                     </div>
                     <%--Hidden field for Login--%>
                     <input type="hidden" name="pageRequest" value="startquiz">
+                    <input type="hidden" name="id" value="0">
                 </form>
             </div>
         </div>

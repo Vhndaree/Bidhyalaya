@@ -11,32 +11,31 @@
 
 <%@include file="/html/head.jsp"%>
 <title>Question List</title>
-
+<link rel="stylesheet" href="/css/stickybar.css">
 </head>
 </body>
 
 <%@include file="/include/navbar.jsp"%>
+
 <div class="page-background">
+
     <div class="container">
         <div class="mt-5">
-                <form method="post" action="startquiz" >
-                    <c:set var="count" value="0" scope="page"/>
-                    <c:forEach items="${questionList}" var="questionList">
-                        <div class="form-group bg-light card-body mt-5">
-                            <label class="font-weight-bold"><c:set var="count" value="${count+1}" scope="page"/>${count}. ${questionList.question}</label><span class="float-right text-primary">Category: ${questionList.category}<br>Difficulty: ${questionList.difficultyLevel}</span><br>
-                            <div class="col-md-4"><input type="radio"  name="answer" value="${questionList.option1}"> ${questionList.option1} </div>
-                            <div class="col-md-4"><input type="radio" name="answer" value="${questionList.option2}"> ${questionList.option2} </div>
-                            <div class="col-md-4"><input type="radio" name=answer" value="${questionList.option3}"> ${questionList.option3}</div>
-                            <div class="col-md-4"><input type="radio" name=answer" value="${questionList.option4}"> ${questionList.option4}</div>
-                        </div>
-                    </c:forEach>
-
-                    <div class=" text-center">
-                        <input class="btn btn-primary" type="submit" value="FINISH" title="FINISH">
-                    </div>
-                    <%--Hidden field for Login--%>
-                    <input type="hidden" name="pageRequest" value="playquiz">
-                </form>
+            <form method="post" action="quiz" >
+                <div class="form-group bg-light card-body mt-5">
+                    <label class="font-weight-bold">${question.question}</label><span class="float-right text-primary">Category: ${question.category}<br>Difficulty: ${question.difficultyLevel}</span><br>
+                    <div class="col-md-4"><input type="radio" name="${question.id}" value="${question.option1}"> ${question.option1} </div>
+                    <div class="col-md-4"><input type="radio" name="${question.id}" value="${question.option2}"> ${question.option2} </div>
+                    <div class="col-md-4"><input type="radio" name="${question.id}" value="${question.option3}"> ${question.option3} </div>
+                    <div class="col-md-4"><input type="radio" name="${question.id}" value="${question.option4}"> ${question.option4} </div>
+                </div>
+                <div class=" text-center">
+                    <input class="btn btn-primary float-right" type="submit" value="NEXT" title="NEXT">
+                </div>
+                <%--Hidden field for Login--%>
+                <input type="hidden" name="pageRequest" value="startquiz">
+                <input type="hidden" name="id" value="${question.id}">
+            </form>
         </div>
     </div>
 </div>

@@ -12,7 +12,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-light" href="startquiz?pageRequest=selectquiz">Play Quiz</a>
+            <a class="nav-link text-light" href="quiz?pageRequest=selectquiz">Play Quiz</a>
         </li>
 
         <c:if test="${sessionScope.user.role=='admin'}">

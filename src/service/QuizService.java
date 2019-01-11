@@ -1,70 +1,83 @@
 package service;
 
 import domains.Question;
+import domains.QuizResult;
 import utils.DatabaseConnection;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class QuizService {
-    public List<Question> getQuestionList(HttpServletRequest request){
-        String[] categories=request.getParameterValues("category");
-        String difficulty=request.getParameter("difficulty");
-        int questionNumber=Integer.parseInt(request.getParameter("questionnumber"));
-        String query="select * from question where category in "+getQuestionMark(categories.length)+" and difficulty_level=? limit ?";
+    public Question getQuestion(HttpServletRequest request){
+        int id=Integer.parseInt(request.getParameter("id"));
+        HttpSession queryParameter = request.getSession(false);
+        if(request.getParameterValues("category")!=null) {
+            String[] categories=request.getParameterValues("category");
+            String selectedCategory = "'" + String.join("', '", categories) + "'";
+            String query = "select * from question where id>? and category in ( " + selectedCategory + " ) and difficulty_level='"+request.getParameter("difficulty")+"' limit 1";
+            queryParameter.setAttribute("query", query);
+        }
         ResultSet resultSet;
-        List<Question> questionList=new ArrayList<>();
-
+        Question question=new Question();
         try {
-            PreparedStatement preparedStatement=new DatabaseConnection().getPreparedStatement(query);
-            for(int i=1;i<=categories.length;i++){
-                preparedStatement.setString(i, categories[i-1]);
-            }
-            preparedStatement.setString(categories.length+1, difficulty);
-            preparedStatement.setInt(categories.length+2, questionNumber==0?1:questionNumber);
+            PreparedStatement preparedStatement=new DatabaseConnection().getPreparedStatement((String)queryParameter.getAttribute("query"));
+            preparedStatement.setInt(1, id);
             resultSet=preparedStatement.executeQuery();
 
-            while(resultSet.next()){
-                Question question=new Question();
-
-                question.setId(resultSet.getInt("id"));
-                question.setQuestion(resultSet.getString("question"));
-                question.setCategory(resultSet.getString("category"));
-                question.setDifficultyLevel(resultSet.getString("difficulty_level"));
-                question.setOption1(resultSet.getString("option_1"));
-                question.setOption2(resultSet.getString("option_2"));
-                question.setOption3(resultSet.getString("option_3"));
-                question.setOption4(resultSet.getString("option_4"));
-                question.setCorrectAnswer(resultSet.getString("correct_answer"));
-
-                questionList.add(question);
+            if(resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    question.setId(resultSet.getInt("id"));
+                    question.setQuestion(resultSet.getString("question"));
+                    question.setCategory(resultSet.getString("category"));
+                    question.setDifficultyLevel(resultSet.getString("difficulty_level"));
+                    question.setOption1(resultSet.getString("option_1"));
+                    question.setOption2(resultSet.getString("option_2"));
+                    question.setOption3(resultSet.getString("option_3"));
+                    question.setOption4(resultSet.getString("option_4"));
+                    question.setCorrectAnswer(resultSet.getString("correct_answer"));
+                }
+            } else {
+                question=null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return questionList;
+        return question;
     }
 
-    private String getQuestionMark(int length){
-        String a="";
-        if(length==1){
-            a="(?)";
-        } else {
-            for (int i = 0; i < length; i++) {
-                if (i == 0) {
-                    a = "(?,";
-                } else if (i < length - 1) {
-                    a += " ?,";
-                } else {
-                    a += " ?)";
-                }
+    public QuizResult getQuizPlayResult(HttpServletRequest request){
+        int id=Integer.parseInt(request.getParameter("id"));
+        String userAnswer=request.getParameter(request.getParameter("id"));
+        String[] questionAnswer=getQuestionAnswer(id);
+        QuizResult quizResult=new QuizResult();
+        quizResult.setId(id);
+        quizResult.setQuestion(questionAnswer[0]);
+        quizResult.setUsersAnswer(userAnswer);
+        quizResult.setCorrectAnswer(questionAnswer[1]);
+
+        return quizResult;
+    }
+
+    private String [] getQuestionAnswer(int id){
+        String [] questionAnswer=new String[2];
+        ResultSet resultSet;
+        String query="select question, correct_answer from question where id=?";
+        try {
+            PreparedStatement preparedStatement=new DatabaseConnection().getPreparedStatement(query);
+            preparedStatement.setInt(1, id);
+            resultSet=preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                questionAnswer[0]=resultSet.getString("question");
+                questionAnswer[1]=resultSet.getString("correct_answer");
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return a;
+        return questionAnswer;
     }
 }
