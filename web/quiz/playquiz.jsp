@@ -11,7 +11,7 @@
 
 <%@include file="/html/head.jsp"%>
 <title>Question List</title>
-<link rel="stylesheet" href="/css/stickybar.css">
+<link rel="stylesheet" href="../css/stickybar.css">
 </head>
 </body>
 
